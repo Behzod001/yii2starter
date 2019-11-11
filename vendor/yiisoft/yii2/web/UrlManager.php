@@ -465,7 +465,7 @@ class UrlManager extends Component
             $url .= '&' . $query;
         }
 
-        return $lang = Lang::getCurrent().$url . $anchor;
+        return $url . $anchor;
     }
 
     /**

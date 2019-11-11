@@ -56,9 +56,7 @@ class Application extends \yii\base\Application
      */
     public $controller;
 
-    public function getCompany(){
-        return (Yii::$app->user->identity && Yii::$app->user->identity->company)?Yii::$app->user->identity->company:'';
-    }
+
     /**
      * {@inheritdoc}
      */

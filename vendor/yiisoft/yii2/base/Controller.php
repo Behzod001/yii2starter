@@ -7,7 +7,6 @@
 
 namespace yii\base;
 
-use access\UserAccess;
 use Yii;
 
 /**
@@ -226,7 +225,9 @@ class Controller extends Component implements ViewContextInterface
         $actionMap = $this->actions();
         if (isset($actionMap[$id])) {
             return Yii::createObject($actionMap[$id], [$id, $this]);
-        } elseif (preg_match('/^[a-z0-9\\-_]+$/', $id) && strpos($id, '--') === false && trim($id, '-') === $id) {
+        }
+
+        if (preg_match('/^(?:[a-z0-9_]+-)*[a-z0-9_]+$/', $id)) {
             $methodName = 'action' . str_replace(' ', '', ucwords(str_replace('-', ' ', $id)));
             if (method_exists($this, $methodName)) {
                 $method = new \ReflectionMethod($this, $methodName);
@@ -426,22 +427,6 @@ class Controller extends Component implements ViewContextInterface
     public function renderFile($file, $params = [])
     {
         return $this->getView()->renderFile($file, $params, $this);
-    }
-
-
-    /**
-     * @param $file
-     * @param array $params
-     * @return string
-     */
-    public function renderWithAccess($file,$params = [])
-    {
-        $access = strtolower( UserAccess::getAccess() );
-        if($access){
-            $info = pathinfo($file);
-            $file = $info['dirname']."/".$access."_".$info['filename'];
-        }
-        return $this->getView()->render($file, $params, $this);
     }
 
     /**

@@ -31,9 +31,7 @@ class Controller extends \yii\base\Controller
      */
     public $actionParams = [];
 
-    public function getCompany(){
-        return (Yii::$app->user->identity && Yii::$app->user->identity->company)?Yii::$app->user->identity->company:'';
-    }
+
     /**
      * Renders a view in response to an AJAX request.
      *
